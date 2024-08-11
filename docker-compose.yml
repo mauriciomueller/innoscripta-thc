@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  node:
+    image: node:latest
+    container_name: news-next-node
+    working_dir: /app
+    volumes:
+      - .:/app
+    networks:
+      - news-network
+
+  app:
+    build: .
+    container_name: news-next
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "3050:3000"
+    command: sh -c "pnpm run dev"
+    networks:
+      - news-network
+
+  install:
+    image: node:latest
+    container_name: news-next-install
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install -g pnpm && pnpm install"
+    networks:
+      - news-network
+
+networks:
+  news-network:
+    driver: bridge
