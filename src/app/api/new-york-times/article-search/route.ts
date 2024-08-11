@@ -1,4 +1,3 @@
-import { apisConfig } from "@/constants/global";
 import { NextResponse } from "next/server";
 
 import { handleApiRequest } from "@/utils/handleApiRequest";
@@ -8,5 +7,5 @@ export async function GET(
   request: Request,
   { params }: { params: { year: string, month: string } }
 ): Promise<NextResponse<NewsApiResponse | { error: string }>> {
-  return handleApiRequest<NewsApiResponse>('newYorkTimesMostPopular', request, {});
+  return handleApiRequest<NewsApiResponse>('newYorkTimesArticleSearch', request, {});
 }

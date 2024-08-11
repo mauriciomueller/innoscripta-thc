@@ -1,4 +1,4 @@
-import { News } from "@/contexts/newsContext";
+import { News } from "@/contexts/newsContext.type";
 
 export type NewsActions =
   | { type: "SET_KEYWORD"; payload: string }

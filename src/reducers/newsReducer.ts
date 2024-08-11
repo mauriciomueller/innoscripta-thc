@@ -1,5 +1,5 @@
 import { NewsActions } from "@/actions/newsActions";
-import { Filters, News } from "@/contexts/newsContext";
+import { Filters, News } from "@/contexts/newsContext.type";
 
 export type State = {
   news: News[];

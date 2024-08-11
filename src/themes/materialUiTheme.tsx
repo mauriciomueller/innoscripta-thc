@@ -67,7 +67,6 @@ export const materialUiTheme = createTheme({
         },
       },
     },
-    // alert
     MuiAlert: {
       styleOverrides: {
         root: {

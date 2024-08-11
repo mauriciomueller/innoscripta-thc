@@ -1,33 +1,46 @@
-import { NewYorkTimesQueryParams } from "@/app/api/new-york-times/most-popular/mostPopular.types";
-import { EverythingQueryParams } from "@/app/api/newsapi/everything/everything.types";
 import { TheGuardianSearchQueryParams } from "@/app/api/the-guardian/search/search.types";
 import { buildApiUrl } from "./urlUtils";
 import { apisConfig } from "@/constants/global";
-import { transformNewsApiData, transformNytApiData, transformTheGuardianData } from "@/services/apiTransformDataService";
-import { Filters } from "@/contexts/newsContext";
+import { transformNewsApiData, transformNewYorkTimesApiData, transformTheGuardianData } from "@/services/apiTransformDataService";
+import { Filters } from "@/contexts/newsContext.type";
+import { NewsApiTopHeadlinesCategory, NewsApiTopHeadlinesQueryParams } from "@/app/api/newsapi/top-headlines/topHeadlines.types";
+import { NewYorkTimesArticleSearchQueryParams } from "@/app/api/new-york-times/article-search/articleSearch.types";
 
 export const buildApiConfigs = (filters: Filters) => {
-  const { keyword } = filters;
+  const { keyword, date, category, sources } = filters;
 
-  const newsApiParams: EverythingQueryParams = {
-    q: keyword || "world",
+  const newsApiTopHeadlinesParams: NewsApiTopHeadlinesQueryParams = {
+    q: keyword || undefined,
+    language: "en",
+    category: category as NewsApiTopHeadlinesCategory || undefined,
+    pageSize: 100,
   };
 
-  const nytApiParams: NewYorkTimesQueryParams = {};
+  const newYorkTimesArticleSearchApiParams: NewYorkTimesArticleSearchQueryParams = {
+    q: keyword || undefined,
+    "begin_date": date || undefined,
+    "end_date": date || undefined,
+    "fq": category ? `section_name:("${category}")` : undefined,
+  };
 
-  const theGuardianApiParams: TheGuardianSearchQueryParams = {};
+  const theGuardianSearchApiParams: TheGuardianSearchQueryParams = {
+    q: keyword || undefined,
+    "from-date": date || undefined,
+    "to-date": date || undefined,
+    section: category || undefined,
+  };
 
   return [
     {
-      url: buildApiUrl(apisConfig.newsApiEverything.internalUrl, newsApiParams),
+      url: buildApiUrl(apisConfig.newsApiEverything.internalUrl, newsApiTopHeadlinesParams),
       transform: transformNewsApiData,
     },
     {
-      url: buildApiUrl(apisConfig.newYorkTimesMostPopular.internalUrl, nytApiParams),
-      transform: transformNytApiData,
+      url: buildApiUrl(apisConfig.newYorkTimesArticleSearch.internalUrl, newYorkTimesArticleSearchApiParams),
+      transform: transformNewYorkTimesApiData,
     },
     {
-      url: buildApiUrl(apisConfig.theGuardianSearch.internalUrl, theGuardianApiParams),
+      url: buildApiUrl(apisConfig.theGuardianSearch.internalUrl, theGuardianSearchApiParams),
       transform: transformTheGuardianData,
     },
   ];

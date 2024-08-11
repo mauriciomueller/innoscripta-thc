@@ -6,7 +6,7 @@ export const NewsCardSkeleton: React.FC = () => {
     <li className="bg-white rounded-3xl p-8 flex flex-col h-full border">
       <Skeleton
         width="100%"
-        height={192}
+        height={120}
         className="skeleton-rounded-xl mb-8"
       />
 

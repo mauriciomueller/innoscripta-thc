@@ -1,27 +1,22 @@
 "use client";
 
 import { TextField } from "@mui/material";
-import { useState } from "react";
+import { useNewsContext } from "@/contexts/newsContext";
 
-export const KeywordFilter: React.FC<{
-  onChange: (keyword: string) => void;
-}> = ({ onChange }) => {
-  const [keyword, setKeyword] = useState("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setKeyword(value);
-    onChange(value);
-  };
+export const KeywordFilter: React.FC = () => {
+  const { formik } = useNewsContext();
 
   return (
     <TextField
       label="Keyword"
-      value={keyword}
-      onChange={handleInputChange}
+      name="keyword"
+      value={formik.values.keyword}
+      onChange={formik.handleChange}
       variant="outlined"
       fullWidth
       margin="normal"
+      error={formik.touched.keyword && Boolean(formik.errors.keyword)}
+      helperText={formik.touched.keyword && formik.errors.keyword}
     />
   );
 };

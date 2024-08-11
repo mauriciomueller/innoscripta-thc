@@ -1,25 +1,18 @@
 "use client";
 
 import { TextField } from "@mui/material";
-import { useState } from "react";
+import { useNewsContext } from "@/contexts/newsContext";
 
-export const DateFilter: React.FC<{ onChange: (date: string) => void }> = ({
-  onChange,
-}) => {
-  const [date, setDate] = useState("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setDate(value);
-    onChange(value);
-  };
+export const DateFilter: React.FC = () => {
+  const { formik } = useNewsContext();
 
   return (
     <TextField
       label="Date"
       type="date"
-      value={date}
-      onChange={handleInputChange}
+      name="date"
+      value={formik.values.date}
+      onChange={formik.handleChange}
       variant="outlined"
       fullWidth
       margin="normal"

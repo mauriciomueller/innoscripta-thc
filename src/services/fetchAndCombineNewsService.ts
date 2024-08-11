@@ -1,7 +1,8 @@
 import { fetchWithFallback } from "@/utils/fetchUtils";
 import { combineNews } from "@/utils/combineNews";
-import { Filters } from "@/contexts/newsContext";
+
 import { buildApiConfigs } from "@/utils/buildApiConfigs";
+import { Filters } from "@/contexts/newsContext.type";
 
 export const fetchAndCombineNewsService = async (filters: Filters = {} as Filters): Promise<{ news: any[]; sourceCounts: { [key: string]: number } }> => {
   const apiConfigs = buildApiConfigs(filters);

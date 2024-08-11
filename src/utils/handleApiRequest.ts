@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { fetchFromApi } from "@/utils/fetchFromApi";
 import { apisConfig } from "@/constants/global";
 
-type QueryParams = { [key: string]: string };
+type QueryParams = { [key: string]: string | number | boolean | undefined };
 
 export async function handleApiRequest<T>(
   apiName: keyof typeof apisConfig,

@@ -1,37 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React from "react";
 
-import { KeywordFilter } from "./KeywordsFilter";
 import { DateFilter } from "./DateFilter";
 import { CategoryFilter } from "./CategoryFilter";
 import { SourceFilter } from "./SourceFilter";
+import { useNewsContext } from "@/contexts/newsContext";
+import { KeywordFilter } from "./KeywordsFilter";
+import { Button } from "@mui/material";
 
 export const Filters: React.FC = () => {
-  const [keyword, setKeyword] = useState("");
-  const [date, setDate] = useState("");
-  const [category, setCategory] = useState("");
-  const [source, setSource] = useState({});
-  const [news, setNews] = useState([]);
-
-  const handleSearch = async () => {
-    /*
-    const filters = { keyword, date, category, source };
-    const filteredNews = await fetchAndCombineNews(filters);
-    setNews(filteredNews);
-    */
-  };
-
-  useEffect(() => {
-    handleSearch();
-  }, [keyword, date, category, source]);
+  const { formik } = useNewsContext();
 
   return (
-    <div className="bg-white rounded-3xl p-8 mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 ">
-      <KeywordFilter onChange={setKeyword} />
-      <DateFilter onChange={setDate} />
-      <CategoryFilter onChange={setCategory} />
-      <SourceFilter onChange={setSource} />
-    </div>
+    <form
+      onSubmit={formik.handleSubmit}
+      className="bg-white rounded-3xl p-8 mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5"
+    >
+      <KeywordFilter />
+      <DateFilter />
+      <CategoryFilter />
+      <SourceFilter />
+      <Button
+        className="col-span-1 sm:col-span-2 lg:col-span-1 h-[47.38px]"
+        type="submit"
+        variant="contained"
+        disabled={formik.isSubmitting || !formik.dirty}
+      >
+        Search
+      </Button>
+    </form>
   );
 };

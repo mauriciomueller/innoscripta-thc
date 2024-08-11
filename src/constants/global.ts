@@ -1,3 +1,5 @@
+import { Filters } from "@/contexts/newsContext.type";
+
 export const PROJECT_NAME = process.env.PROJECT_NAME || "News Aggregator";
 export const PROJECT_URL = process.env.PROJECT_URL || "http://localhost:3000";
 const NEWSAPI_API_KEY = process.env.NEWSAPI_API_KEY || "";
@@ -17,6 +19,14 @@ type ApisConfig = {
   };
 };
 
+export const initialFilters: Filters = {
+  keyword: "",
+  date: "",
+  category: "",
+  sources: ["NewsAPI", "New York Times", "The Guardian"],
+  author: "",
+};
+
 export const apisConfig: ApisConfig = {
   'newsApiEverything': {
     'url': `${NEWS_API_V2_URL}/everything`,
@@ -30,23 +40,11 @@ export const apisConfig: ApisConfig = {
     'apiKeyName': 'apiKey',
     'internalUrl': `${PROJECT_URL}/api/newsapi/top-head`
   },
-  'newsApiSources': {
-    'url': `${NEWS_API_V2_URL}/sources`,
-    'apiKey': NEWSAPI_API_KEY,
-    'apiKeyName': 'apiKey',
-    'internalUrl': `${PROJECT_URL}/api/newsapi/sources`,
-  },
-  'newYorkTimesTopStories': {
-    'url': `${NEW_YORK_TIMES_API_URL}/topstories/v2`,
+  'newYorkTimesArticleSearch': {
+    'url': `${NEW_YORK_TIMES_API_URL}/search/v2/articlesearch.json`,
     'apiKey': NEW_YORK_TIMES_API_KEY,
     'apiKeyName': 'api-key',
-    'internalUrl': `${PROJECT_URL}/api/new-york-times/top-stories`,
-  },
-  'newYorkTimesMostPopular': {
-    'url': `${NEW_YORK_TIMES_API_URL}/mostpopular/v2/viewed/1.json`,
-    'apiKey': NEW_YORK_TIMES_API_KEY,
-    'apiKeyName': 'api-key',
-    'internalUrl': `${PROJECT_URL}/api/new-york-times/most-popular`,
+    'internalUrl': `${PROJECT_URL}/api/new-york-times/article-search`,
   },
   'theGuardianSearch': {
     'url': `${THE_GUARDIAN_API_URL}/search`,

@@ -1,7 +1,7 @@
 "use client";
 
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useState } from "react";
+import { useNewsContext } from "@/contexts/newsContext";
 
 const categories = [
   "Business",
@@ -11,25 +11,26 @@ const categories = [
   "Sports",
 ];
 
-export const CategoryFilter: React.FC<{
-  onChange: (category: string) => void;
-}> = ({ onChange }) => {
-  const [category, setCategory] = useState("");
+export const CategoryFilter: React.FC = () => {
+  const { formik } = useNewsContext();
 
-  const handleSelectChange = (e: any) => {
-    const value = e.target.value;
-    setCategory(value);
-    onChange(value);
+  const handleSelectChange = (event: any) => {
+    const value = event.target.value;
+    formik.setFieldValue("categories", [value]);
   };
 
   return (
     <FormControl variant="outlined" fullWidth margin="normal">
       <InputLabel>Category</InputLabel>
-      <Select value={category} onChange={handleSelectChange} label="Category">
-        <MenuItem value="">All Categories</MenuItem>
-        {categories.map((cat) => (
-          <MenuItem key={cat} value={cat}>
-            {cat}
+      <Select
+        name="categories"
+        value={formik.values.category[0] || ""}
+        onChange={handleSelectChange}
+        label="Category"
+      >
+        {categories.map((category) => (
+          <MenuItem key={category} value={category}>
+            {category}
           </MenuItem>
         ))}
       </Select>
