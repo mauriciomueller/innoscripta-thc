@@ -31,7 +31,7 @@ export type NewYorkTimesArticleSearchArticle = {
   print_page?: number; // Page number in print
   print_section?: string; // Section in print
   source: string; // Source of the article
-  multimedia: NewYorkTimesArticleSearchMedia[]; // Array of multimedia objects
+  multimedia: NewYorkTimesArticleSearchMultimedia[]; // Array of multimedia objects
   headline: {
     main: string; // Main headline
     kicker?: string; // Secondary headline
@@ -51,12 +51,22 @@ export type NewYorkTimesArticleSearchArticle = {
   uri: string; // URI identifier
 };
 
-export type NewYorkTimesArticleSearchMedia = {
-  type: string; // Type of media (image, video, etc.)
-  subtype?: string; // Subtype of media
-  caption?: string; // Caption for the media
-  copyright?: string; // Copyright information
-  media_metadata: NewYorkTimesArticleSearchMediaMetadata[]; // Array of metadata
+export type NewYorkTimesArticleSearchMultimedia = {
+  rank: number; // Rank of the media
+  subtype: string; // Subtype of the media
+  caption?: string; // Caption of the media
+  credit?: string; // Credit of the media
+  type: string; // Type of the media
+  url: string; // URL of the media
+  height: number; // Height of the media
+  width: number; // Width of the media
+  legacy: {
+    xlarge: string; // URL of the media
+    xlargewidth: number; // Width of the media
+    xlargeheight: number; // Height of the media
+  };
+  subType: string; // Subtype of the media
+  crop_name: string; // Crop name of the media
 };
 
 export type NewYorkTimesArticleSearchMediaMetadata = {

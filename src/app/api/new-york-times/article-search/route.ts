@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
-import { handleApiRequest } from "@/utils/handleApiRequest";
 import { NewsApiResponse } from "../../newsapi/everything/everything.types";
+import { handleApiRequestService } from "@/services/handleApiRequestService";
 
 export async function GET(
   request: Request,
   { params }: { params: { year: string, month: string } }
 ): Promise<NextResponse<NewsApiResponse | { error: string }>> {
-  return handleApiRequest<NewsApiResponse>('newYorkTimesArticleSearch', request, {});
+  return handleApiRequestService<NewsApiResponse>('newYorkTimesArticleSearch', request, {});
 }

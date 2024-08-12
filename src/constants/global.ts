@@ -38,7 +38,7 @@ export const apisConfig: ApisConfig = {
     'url': `${NEWS_API_V2_URL}/top-headlines`,
     'apiKey': NEWSAPI_API_KEY,
     'apiKeyName': 'apiKey',
-    'internalUrl': `${PROJECT_URL}/api/newsapi/top-head`
+    'internalUrl': `${PROJECT_URL}/api/newsapi/top-headlines`
   },
   'newYorkTimesArticleSearch': {
     'url': `${NEW_YORK_TIMES_API_URL}/search/v2/articlesearch.json`,

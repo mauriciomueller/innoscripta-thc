@@ -1,8 +1,8 @@
 import sanitizeHtml from 'sanitize-html';
 
-import { NewsApiResponse } from "@/app/api/newsapi/everything/everything.types";
 import { TheGuardianSearchResponse } from "@/app/api/the-guardian/search/search.types";
 import { NewYorkTimesArticleSearchResponse } from '@/app/api/new-york-times/article-search/articleSearch.types';
+import { NewsApiTopHeadlinesResponse } from '@/app/api/newsapi/top-headlines/topHeadlines.types';
 
 const sanitizeOptions = {
   allowedTags: [],
@@ -23,8 +23,9 @@ function sanitizeObject(obj: Record<string, any>): Record<string, any> {
   return sanitizedObj;
 }
 
-export function transformNewsApiData(data: NewsApiResponse): any[] {
-  return data.articles.map((article: any) => {
+export function transformNewsApiData(data: NewsApiTopHeadlinesResponse): any[] {
+  const { articles } = data;
+  return articles.map((article) => {
     const sanitizedArticle = sanitizeObject({
       title: article.title,
       description: article.description,
@@ -38,15 +39,16 @@ export function transformNewsApiData(data: NewsApiResponse): any[] {
 }
 
 export function transformNewYorkTimesApiData(data: NewYorkTimesArticleSearchResponse): any[] {
-  return data.response.docs.map((article: any) => {
-    const mediaMetadata = article.media && article.media[0]?.['media-metadata'];
-    const imageUrl = mediaMetadata && mediaMetadata[2]?.url ? mediaMetadata[2].url : null;
+  const articles = data.response.docs;
+  return articles.map((article) => {
+    const mediaMetadata = article.multimedia && article.multimedia[0];
+    const imageUrl = mediaMetadata ? `https://www.nytimes.com/${mediaMetadata.url}` : "";
 
     const sanitizedArticle = sanitizeObject({
-      title: article.title || article.headline?.main,
-      description: article.abstract || article.snippet,
-      link: article.url,
-      image: imageUrl,
+      title: article.headline?.main || "",
+      description: article.snippet || "",
+      link: article.web_url || "#",
+      image: imageUrl || "",
       source: "New York Times",
     });
 
@@ -55,7 +57,8 @@ export function transformNewYorkTimesApiData(data: NewYorkTimesArticleSearchResp
 }
 
 export function transformTheGuardianData(data: TheGuardianSearchResponse): any[] {
-  return data.response.results.map((article: any) => {
+  const articles = data.response.results;
+  return articles.map((article: any) => {
     const sanitizedArticle = sanitizeObject({
       title: article.webTitle,
       description: article.fields?.trailText || "",

@@ -1,4 +1,4 @@
-export async function fetchWithFallback(url: string): Promise<any | null> {
+export async function fetchFromInternalApiService(url: string): Promise<any | null> {
   try {
     const response = await fetch(url);
     if (!response.ok) {

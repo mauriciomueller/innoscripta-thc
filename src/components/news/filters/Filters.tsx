@@ -15,7 +15,7 @@ export const Filters: React.FC = () => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="bg-white rounded-3xl p-8 mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5"
+      className="bg-white rounded-3xl p-8 mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-6"
     >
       <KeywordFilter />
       <DateFilter />
@@ -25,7 +25,6 @@ export const Filters: React.FC = () => {
         className="col-span-1 sm:col-span-2 lg:col-span-1 h-[47.38px]"
         type="submit"
         variant="contained"
-        disabled={formik.isSubmitting || !formik.dirty}
       >
         Search
       </Button>

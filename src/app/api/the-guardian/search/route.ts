@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
 
-import { handleApiRequest } from "@/utils/handleApiRequest";
 import { TheGuardianSearchResponse } from "./search.types";
+import { handleApiRequestService } from "@/services/handleApiRequestService";
 
 export async function GET(request: Request): Promise<NextResponse<TheGuardianSearchResponse | { error: string }>> {
-  return handleApiRequest('theGuardianSearch', request, {
+  return handleApiRequestService('theGuardianSearch', request, {
       'show-tags': "contributor",
       'show-fields': "starRating,headline,trailText,thumbnail,short-url",
-      'from-date': '2023-01-01',
-      'to-date': '2023-12-31',
       'order-by': 'newest',
       'page-size': 100,
     },

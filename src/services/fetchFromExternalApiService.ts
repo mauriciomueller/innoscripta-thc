@@ -1,6 +1,6 @@
 import { apisConfig } from "@/constants/global";
 
-export async function fetchFromApi<T>(apiClient: string, queryParams?: T) {
+export async function fetchFromExternalApiService<T>(apiClient: string, queryParams?: T) {
   const { url, apiKeyName, apiKey } = apisConfig[apiClient];
 
   const queryParamsWithKey = {
@@ -10,6 +10,8 @@ export async function fetchFromApi<T>(apiClient: string, queryParams?: T) {
 
   const queryString = queryParamsWithKey ? new URLSearchParams(queryParamsWithKey as any).toString() : '';
   const fetchUrl = queryString ? `${url}?${queryString}` : url;
+
+  console.log('fetchUrl:', fetchUrl);
 
   const response = await fetch(fetchUrl, {
     headers: {

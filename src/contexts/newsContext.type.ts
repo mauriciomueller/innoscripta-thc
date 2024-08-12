@@ -30,7 +30,8 @@ export type News = {
 export type Filters = {
   keyword: string;
   sources: string[];
-  date: string;
+  startDate: string;
+  endDate: string;
   author: string;
   category: string;
 };

@@ -103,3 +103,8 @@ p {
 .skeleton-rounded-3xl {
   border-radius: 1.4rem !important;
 }
+
+/* global.css or any CSS file imported in your project */
+.toastify-toast {
+  border-radius: 0.6em !important;
+}

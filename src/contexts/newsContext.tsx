@@ -3,10 +3,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAndCombineNewsService } from "@/services/fetchAndCombineNewsService";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
 import { Filters, NewsContextType } from "./newsContext.type";
 import { initialFilters } from "@/constants/global";
+import { fetchAndCombineNewsService } from "@/services/fetchAndCombineNewsService";
+
+const NEWS_FILTER_COOKIE_NAME = "newsFilters";
 
 const NewsContext = createContext<NewsContextType | undefined>(undefined);
 
@@ -23,17 +26,31 @@ export const NewsProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [filters, setFilters] = useState<Filters>(initialFilters);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedFilters = Cookies.get(NEWS_FILTER_COOKIE_NAME);
+      if (storedFilters) {
+        setFilters(JSON.parse(storedFilters));
+      }
+    }
+  }, []);
+
   const formik = useFormik<Filters>({
-    initialValues: initialFilters,
+    initialValues: filters,
     validationSchema: Yup.object({
       keyword: Yup.string(),
-      date: Yup.string(),
+      startDate: Yup.date().nullable().max(Yup.ref("endDate")),
+      endDate: Yup.date().nullable().min(Yup.ref("startDate")),
       category: Yup.string(),
       source: Yup.array().of(Yup.string()),
       author: Yup.string(),
     }),
     onSubmit: () => {
-      setFilters(formik.values);
+      const newFilters = formik.values;
+      setFilters(newFilters);
+      Cookies.set(NEWS_FILTER_COOKIE_NAME, JSON.stringify(newFilters), {
+        expires: 7,
+      });
       refetch();
     },
   });
@@ -41,18 +58,16 @@ export const NewsProvider: React.FC<{ children: React.ReactNode }> = ({
   const resetFilter = () => {
     formik.resetForm();
     setFilters(initialFilters);
+    Cookies.remove(NEWS_FILTER_COOKIE_NAME);
     refetch();
   };
 
-  const { data, isLoading, error, refetch, isFetching, isFetched } = useQuery({
+  const { data, isLoading, error, refetch, isFetched, isFetching } = useQuery({
     queryKey: ["news", filters],
     queryFn: () => fetchAndCombineNewsService(filters),
-    enabled: false, // Disable auto-fetch on mount
+    enabled: true,
+    refetchOnWindowFocus: false,
   });
-
-  useEffect(() => {
-    refetch(); // Manually trigger prefetch
-  }, []);
 
   return (
     <NewsContext.Provider
@@ -62,9 +77,9 @@ export const NewsProvider: React.FC<{ children: React.ReactNode }> = ({
           sourceCounts: data?.sourceCounts || {},
           filters: formik.values,
           isLoading,
+          error,
           isFetching,
           isFetched,
-          error,
         },
         formik,
         resetFilter,

@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { fetchFromApi } from "@/utils/fetchFromApi";
 import { apisConfig } from "@/constants/global";
+import { fetchFromExternalApiService } from "./fetchFromExternalApiService";
 
 type QueryParams = { [key: string]: string | number | boolean | undefined };
 
-export async function handleApiRequest<T>(
+export async function handleApiRequestService<T>(
   apiName: keyof typeof apisConfig,
   request: Request,
   config: QueryParams
@@ -16,8 +16,10 @@ export async function handleApiRequest<T>(
     ...config,
   };
 
+  console.log('queryParams:', queryParams);
+
   try {
-    const data = await fetchFromApi<T>(String(apiName), queryParams as T);
+    const data = await fetchFromExternalApiService<T>(String(apiName), queryParams as T);
     return NextResponse.json(data);
   } catch (error: unknown) {
     console.error(`Failed to fetch data from ${apiName} API`, error);
