@@ -1,9 +1,11 @@
+"use client";
+
 import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
-import { useNewsContext } from "@/contexts/newsContext";
 import { unifiedCategories } from "@/utils/categoryMappings";
+import { useSearchContext } from "@/contexts/searchContext";
 
 export const CategoryFilter: React.FC = () => {
-  const { formik } = useNewsContext();
+  const { formik } = useSearchContext();
 
   return (
     <FormControl variant="outlined" fullWidth margin="normal">

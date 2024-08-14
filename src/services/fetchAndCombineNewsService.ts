@@ -1,11 +1,18 @@
+import { Filters } from "@/contexts/searchContext.type";
+import { Preferences } from "@/contexts/feedContext.type";
 import { combineNews } from "@/utils/combineNews";
-
 import { buildApiConfigs } from "@/utils/buildApiConfigs";
-import { Filters } from "@/contexts/newsContext.type";
-import { fetchFromInternalApiService } from "./fetchFromInternalApiService";
+import { fetchFromInternalApiService } from "@/services/fetchFromInternalApiService";
 
-export const fetchAndCombineNewsService = async (filters: Filters = {} as Filters): Promise<{ news: any[]; sourceCounts: { [key: string]: number } }> => {
-  const apiConfigs = buildApiConfigs(filters);
+type ApiConfig = {
+  url: string;
+  transform: (data: any) => any[];
+};
+
+export const fetchAndCombineNewsService = async (
+  params: Filters | Preferences
+): Promise<{ news: any[]; sourceCounts: { [key: string]: number } }> => {
+  const apiConfigs: ApiConfig[] = buildApiConfigs(params);
 
   let allNews: any[] = [];
   let sourceCounts: { [key: string]: number } = {};
@@ -25,4 +32,3 @@ export const fetchAndCombineNewsService = async (filters: Filters = {} as Filter
 
   return { news: allNews, sourceCounts };
 };
-

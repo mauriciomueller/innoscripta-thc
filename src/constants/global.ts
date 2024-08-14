@@ -1,4 +1,4 @@
-import { Filters } from "@/contexts/newsContext.type";
+import { Filters } from "@/contexts/searchContext.type";
 
 export const PROJECT_NAME = process.env.PROJECT_NAME || "News Aggregator";
 export const PROJECT_URL = process.env.PROJECT_URL || "http://localhost:3000";
@@ -19,13 +19,19 @@ type ApisConfig = {
   };
 };
 
+type Sources = string[];
+
+export const sources: Sources = ["NewsAPI", "New York Times", "The Guardian"];
+
 export const initialFilters: Filters = {
   keyword: "",
-  date: "",
+  startDate: "",
+  endDate: "",
   category: "",
-  sources: ["NewsAPI", "New York Times", "The Guardian"],
+  sources: sources,
   author: "",
 };
+
 
 export const apisConfig: ApisConfig = {
   'newsApiEverything': {

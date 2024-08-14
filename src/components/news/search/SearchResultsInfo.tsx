@@ -1,10 +1,10 @@
 "use client";
 
-import { useNewsContext } from "@/contexts/newsContext";
 import Loading from "@/app/loading";
+import { useSearchContext } from "@/contexts/searchContext";
 
-export const NewsSourcesInfo = () => {
-  const { state } = useNewsContext();
+export const SearchResultsInfo: React.FC = () => {
+  const { state } = useSearchContext();
   const { news, sourceCounts, isLoading } = state;
 
   // Only render the section if there are news articles

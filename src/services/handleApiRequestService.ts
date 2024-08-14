@@ -16,8 +16,6 @@ export async function handleApiRequestService<T>(
     ...config,
   };
 
-  console.log('queryParams:', queryParams);
-
   try {
     const data = await fetchFromExternalApiService<T>(String(apiName), queryParams as T);
     return NextResponse.json(data);

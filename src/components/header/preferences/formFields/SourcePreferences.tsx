@@ -9,13 +9,13 @@ import {
   Checkbox,
   ListItemText,
 } from "@mui/material";
-import { useNewsContext } from "@/contexts/newsContext";
+
 import { toast } from "react-toastify";
+import { useFeedContext } from "@/contexts/feedContext";
+import { sources } from "@/constants/global";
 
-const sources = ["NewsAPI", "New York Times", "The Guardian"];
-
-export const SourceFilter: React.FC = () => {
-  const { formik } = useNewsContext();
+export const SourcePreferences: React.FC = () => {
+  const { formik } = useFeedContext();
 
   const handleSelectChange = (event: any) => {
     const value = event.target.value;
@@ -50,19 +50,12 @@ export const SourceFilter: React.FC = () => {
         label="Source"
         renderValue={(selected) => (selected as string[]).join(", ")}
       >
-        <MenuItem
-          value="All Sources"
-          className="font-bold text-indigo-600 bg-indigo-100 hover:bg-indigo-200"
-        >
-          <Checkbox
-            checked={formik.values.sources.length === sources.length}
-            className="text-indigo-600"
-          />
-          <ListItemText primary="Select All Sources" />
-        </MenuItem>
         {sources.map((source) => (
           <MenuItem key={source} value={source}>
-            <Checkbox checked={formik.values.sources.indexOf(source) > -1} />
+            <Checkbox
+              checked={formik.values.sources.indexOf(source) > -1}
+              className="text-white"
+            />
             <ListItemText primary={source} />
           </MenuItem>
         ))}

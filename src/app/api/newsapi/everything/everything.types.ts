@@ -1,4 +1,7 @@
 export type EverythingQueryParams = {
+
+
+
   apiKey?: string
   q?: string;
   searchIn?: string;

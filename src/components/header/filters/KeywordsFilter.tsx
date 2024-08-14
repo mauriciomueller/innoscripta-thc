@@ -1,10 +1,10 @@
 "use client";
 
+import { useSearchContext } from "@/contexts/searchContext";
 import { TextField } from "@mui/material";
-import { useNewsContext } from "@/contexts/newsContext";
 
 export const KeywordFilter: React.FC = () => {
-  const { formik } = useNewsContext();
+  const { formik } = useSearchContext();
 
   return (
     <TextField

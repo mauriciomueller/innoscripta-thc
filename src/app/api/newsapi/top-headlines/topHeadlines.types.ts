@@ -1,12 +1,9 @@
 export type NewsApiTopHeadlinesQueryParams = {
   apiKey?: string
-  q?: string;
   country?: NewsApiTopHeadlinesCountry;
-  sources?: string;
   category?: NewsApiTopHeadlinesCategory | undefined;
-  to?: string;
-  language?: string;
-  sortBy?: 'relevancy' | 'popularity' | 'publishedAt';
+  sources?: string;
+  q?: string;
   pageSize?: number;
   page?: number;
 }

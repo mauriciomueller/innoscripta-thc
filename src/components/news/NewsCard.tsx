@@ -5,18 +5,19 @@ import { Button } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 import Link from "next/link";
-import { News } from "@/contexts/newsContext.type";
-import { LoadingIcon } from "../common/LoadingIcon";
 
-interface NewsCardProps {
+import { LoadingIcon } from "../common/LoadingIcon";
+import { News } from "@/services/apiTransformDataService";
+
+type NewsCardProps = {
   article: News;
-}
+};
 
 export const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
-    <li className="group bg-white text-indigo-800 rounded-3xl p-8 transition-transform transform hover:scale-105 hover:shadow-lg hover:cursor-pointer">
+    <li className="group border border-gray-800 text-indigo-600 rounded-3xl p-8 transition-transform transform hover:border-indigo-500 hover:scale-105 hover:shadow-lg hover:cursor-pointer">
       <Link
         href={article.link || "#"}
         passHref
@@ -30,8 +31,8 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
           setIsImageLoaded={setIsImageLoaded}
           source={article.source}
         />
-        <h3>{article.title}</h3>
-        <p className="flex-grow mb-8 text-gray-500">{article.description}</p>
+        <h3 className="text-indigo-400">{article.title}</h3>
+        <p className="flex-grow mb-8 text-gray-200">{article.description}</p>
         <ReadMoreButton />
       </Link>
     </li>
@@ -95,7 +96,7 @@ const SourceBadge: React.FC<{ source: string }> = ({ source }) => (
 const ReadMoreButton: React.FC = () => (
   <Button
     endIcon={<ArrowRightAltIcon />}
-    variant="outlined"
+    variant="contained"
     className="mt-auto transition-all group-hover:bg-indigo-100 group-hover:border-indigo-800 group-hover:text-indigo-800 group-hover:border-2"
   >
     Read more

@@ -6,8 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --medium-orchid: #fe41e5;
-  --hot-pink: #4e46c1;
+  --color-primary: #4e46c1;
+  --color-secondary: #fe41e5;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,7 +34,7 @@ body {
 }
 
 .text-gradient {
-  background-image: linear-gradient(135deg, var(--medium-orchid), var(--hot-pink));
+  background-image: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   color: var(--medium-orchid);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
@@ -63,6 +63,10 @@ h3 {
 p {
   font-size: 1.2rem; /* 1.2rem = 12px */
   margin-bottom: 0.8rem;
+}
+
+div {
+  font-size: 1.2rem; /* 1.2rem = 12px */
 }
 
 @layer utilities {
@@ -107,4 +111,23 @@ p {
 /* global.css or any CSS file imported in your project */
 .toastify-toast {
   border-radius: 0.6em !important;
+}
+
+.MuiDayCalendar-weekDayLabel, .MuiPickersDay-root {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  color: white;  
+}
+
+.MuiPickersDay-root.Mui-selected {
+  background-color: var(--color-secondary);
+}
+
+.MuiPickersArrowSwitcher-leftArrowIcon, .MuiPickersArrowSwitcher-rightArrowIcon {
+  color: var(--color-secondary);
+  font-size: 1.8rem;
+}
+
+.css-1vgkj45-MuiButtonBase-root-MuiPickersDay-root.Mui-disabled:not(.Mui-selected) {
+  color: rgba(221, 221, 221, 0.38)
 }

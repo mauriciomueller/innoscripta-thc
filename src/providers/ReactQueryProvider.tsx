@@ -4,7 +4,9 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 
-const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const ReactQueryProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
@@ -15,4 +17,4 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   );
 };
 
-export default Provider;
+export default ReactQueryProvider;

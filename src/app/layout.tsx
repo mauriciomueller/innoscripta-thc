@@ -1,19 +1,16 @@
 import "./globals.css";
-import "react-toastify/dist/ReactToastify.css";
-import { Inter } from "next/font/google";
-import Header from "@/components/common/Header";
-import { PROJECT_NAME } from "@/constants/global";
+import "react-toastify/dist/ReactToastify.min.css";
+import Header from "@/components/header/Header";
 import { Container, ThemeProvider } from "@mui/material";
 import { materialUiTheme } from "@/themes/materialUiTheme";
-import Provider from "@/components/Provider";
-import Loading from "./loading";
-import { Suspense } from "react";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { ToastContainer } from "react-toastify";
-
-const inter = Inter({ subsets: ["latin"] });
+import { SearchProvider } from "@/contexts/searchContext";
+import DatePickerLocalizationProvider from "@/providers/DatePickerLocalizationProvider";
+import { FeedProvider } from "@/contexts/feedContext";
 
 export const metadata = {
-  title: PROJECT_NAME,
+  title: "News Aggregator",
   description:
     "News Aggregator featuring the latest news from around the world.",
 };
@@ -25,18 +22,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
-        <Suspense fallback={<Loading />}>
-          <Provider>
-            <ThemeProvider theme={materialUiTheme}>
-              <Container maxWidth="lg" className="p-6">
-                <Header />
-                <main>{children}</main>
-              </Container>
-              <ToastContainer toastClassName="toastify-toast" />
-            </ThemeProvider>
-          </Provider>
-        </Suspense>
+      <body>
+        <DatePickerLocalizationProvider>
+          <ReactQueryProvider>
+            <FeedProvider>
+              <SearchProvider>
+                <ThemeProvider theme={materialUiTheme}>
+                  <Container maxWidth="lg" className="p-6">
+                    <Header />
+                    <main>{children}</main>
+                  </Container>
+                  <ToastContainer toastClassName="toastify-toast" />
+                </ThemeProvider>
+              </SearchProvider>
+            </FeedProvider>
+          </ReactQueryProvider>
+        </DatePickerLocalizationProvider>
       </body>
     </html>
   );

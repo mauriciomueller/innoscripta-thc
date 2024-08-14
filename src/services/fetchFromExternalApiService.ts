@@ -11,8 +11,6 @@ export async function fetchFromExternalApiService<T>(apiClient: string, queryPar
   const queryString = queryParamsWithKey ? new URLSearchParams(queryParamsWithKey as any).toString() : '';
   const fetchUrl = queryString ? `${url}?${queryString}` : url;
 
-  console.log('fetchUrl:', fetchUrl);
-
   const response = await fetch(fetchUrl, {
     headers: {
       'Content-Type': 'application/json'

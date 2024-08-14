@@ -9,6 +9,15 @@ const sanitizeOptions = {
   allowedAttributes: {},
 };
 
+export type News = {
+  title: string;
+  description: string;
+  link: string;
+  image: string;
+  publishedAt: string;
+  source: string;
+};
+
 function sanitizeObject(obj: Record<string, any>): Record<string, any> {
   const sanitizedObj: Record<string, any> = {};
 
@@ -23,7 +32,7 @@ function sanitizeObject(obj: Record<string, any>): Record<string, any> {
   return sanitizedObj;
 }
 
-export function transformNewsApiData(data: NewsApiTopHeadlinesResponse): any[] {
+export function transformNewsApiData(data: NewsApiTopHeadlinesResponse): News[] {
   const { articles } = data;
   return articles.map((article) => {
     const sanitizedArticle = sanitizeObject({
@@ -34,11 +43,11 @@ export function transformNewsApiData(data: NewsApiTopHeadlinesResponse): any[] {
       source: "NewsAPI",
     });
 
-    return sanitizedArticle;
+    return sanitizedArticle as News;
   });
 }
 
-export function transformNewYorkTimesApiData(data: NewYorkTimesArticleSearchResponse): any[] {
+export function transformNewYorkTimesApiData(data: NewYorkTimesArticleSearchResponse): News[] {
   const articles = data.response.docs;
   return articles.map((article) => {
     const mediaMetadata = article.multimedia && article.multimedia[0];
@@ -52,11 +61,11 @@ export function transformNewYorkTimesApiData(data: NewYorkTimesArticleSearchResp
       source: "New York Times",
     });
 
-    return sanitizedArticle;
+    return sanitizedArticle as News;
   });
 }
 
-export function transformTheGuardianData(data: TheGuardianSearchResponse): any[] {
+export function transformTheGuardianData(data: TheGuardianSearchResponse): News[] {
   const articles = data.response.results;
   return articles.map((article: any) => {
     const sanitizedArticle = sanitizeObject({
@@ -67,6 +76,6 @@ export function transformTheGuardianData(data: TheGuardianSearchResponse): any[]
       source: "The Guardian",
     });
 
-    return sanitizedArticle;
+    return sanitizedArticle as News;
   });
 }

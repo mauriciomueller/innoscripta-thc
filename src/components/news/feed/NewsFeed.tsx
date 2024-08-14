@@ -1,28 +1,33 @@
 "use client";
 
-import { useNewsContext } from "@/contexts/newsContext";
-import { NewsCard } from "./NewsCard";
-import { NewsListSkeleton } from "./NewsListSkeleton";
+import { NewsCard } from "@/components/news/NewsCard";
+import { NewsListSkeleton } from "@/components/news/NewsListSkeleton";
 import { Alert, Button } from "@mui/material";
+import { useFeedContext } from "@/contexts/feedContext";
+import FeedIcon from "@mui/icons-material/Feed";
 import { Fragment } from "react";
 
-export const NewsList = () => {
-  const { state, resetFilter } = useNewsContext();
+export const NewsFeed: React.FC = () => {
+  const { state, resetPreferences } = useFeedContext();
   const { news, isLoading, error, isFetching, isFetched } = state;
+
   return (
     <Fragment>
+      <h1 className="flex items-center gap-3">
+        <FeedIcon fontSize="inherit" /> Your feed
+      </h1>
       {error && (
         <Alert severity="error" className="flex items-center mb-8">
-          An error occurred while loading news.
+          An error occurred while loading the news feed.
         </Alert>
       )}
 
       {!isFetching && !isLoading && isFetched && news.length === 0 && (
         <Alert severity="info" className="flex items-center mb-8">
           <div className="flex items-center gap-3">
-            No news articles found for the selected filters, try changing them.{" "}
-            <Button variant="contained" onClick={resetFilter}>
-              reset filter
+            No news articles found for your feed, try changing the preferences.{" "}
+            <Button variant="contained" onClick={resetPreferences}>
+              Reset Preferences
             </Button>
           </div>
         </Alert>
