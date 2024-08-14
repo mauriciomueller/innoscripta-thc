@@ -41,6 +41,10 @@ Open the .env.local file and fill in the necessary environment variables. These 
 `NEXT_PUBLIC_GUARDIAN_API_KEY`: Your The Guardian API key
 `NEXT_PUBLIC_NYT_API_KEY`: Your New York Times API key
 ```
+If you don't have the API keys, you can get them by signing up for the respective news APIs.
+For NewsAPI, you can sign up [here](https://newsapi.org/).
+For The Guardian, you can sign up [here](https://open-platform.theguardian.com/access/).
+For New York Times, you can sign up [here](https://developer.nytimes.com/).
 
 ### 4. Build the Docker containers:
 ```bash
