@@ -4,11 +4,8 @@ import Link from "next/link";
 
 export const NewsAggregatorLogo: React.FC = () => {
   return (
-    <h1>
-      <Link
-        href="/"
-        className="flex items-center gap-3 font-semibold mb-0 text-3xl text-gradient"
-      >
+    <h1 className="font-semibold mb-0 text-3xl text-gradient">
+      <Link href="/" className="flex items-center gap-3">
         <NewspaperIcon fontSize="inherit" /> {PROJECT_NAME}
       </Link>
     </h1>
