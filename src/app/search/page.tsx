@@ -8,6 +8,8 @@ import { initialFilters } from "@/constants/global";
 import { SearchResultsInfo } from "@/components/news/search/SearchResultsInfo";
 import { SearchResults } from "@/components/news/search/SearchResults";
 import SearchIcon from "@mui/icons-material/Search";
+import { Suspense } from "react";
+import { NewsListSkeleton } from "@/components/news/NewsListSkeleton";
 
 export default async function SearchPage() {
   const queryClient = new QueryClient();
@@ -28,8 +30,10 @@ export default async function SearchPage() {
       <h1 className="pl-4 flex items-center gap-2">
         <SearchIcon fontSize="inherit" /> Search Results
       </h1>
-      <SearchResultsInfo />
-      <SearchResults />
+      <Suspense fallback={<NewsListSkeleton />}>
+        <SearchResultsInfo />
+        <SearchResults />
+      </Suspense>
     </HydrationBoundary>
   );
 }

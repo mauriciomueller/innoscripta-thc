@@ -4,10 +4,10 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import { Suspense } from "react";
-import Loading from "./loading";
 import { fetchFeedService } from "@/services/fetchFeedService";
 import { initialFilters } from "@/constants/global";
 import { NewsFeed } from "@/components/news/feed/NewsFeed";
+import { NewsListSkeleton } from "@/components/news/NewsListSkeleton";
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -23,7 +23,7 @@ export default async function Home() {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<NewsListSkeleton />}>
         <NewsFeed />
       </Suspense>
     </HydrationBoundary>
